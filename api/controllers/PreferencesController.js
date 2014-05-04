@@ -1,5 +1,5 @@
 /**
- * ShoplistController.js 
+ * PreferencesController.js 
  *
  * @description ::
  * @docs        :: http://sailsjs.org/#!documentation/controllers

@@ -1,5 +1,5 @@
 /**
- * RandomListController.js 
+ * CategoryController.js 
  *
  * @description ::
  * @docs        :: http://sailsjs.org/#!documentation/controllers

@@ -16,15 +16,64 @@ module.exports.sockets = {
   // mixes in socket.io events for your routes and blueprints automatically.
   onConnect: function(session, socket) {
 
-    // By default, do nothing.
+ var socketId = sails.sockets.id(socket);
+
+    User.create({name: 'usuario_'+socketId, socketId: socketId}).exec(function(err, user) {
+
+        // Create the session.users hash if it doesn't exist already
+        session.users = session.users || {};
+
+        // Save this user in the session, indexed by their socket ID.
+        // This way we can look the user up by socket ID later.
+        session.users[socketId] = user;
+
+        // Persist the session
+        session.save();
+
+        // Send a message to the client with information about the new user
+        sails.sockets.emit(socketId, 'hello', user);
+
+        // Subscribe the connected socket to custom messages regarding the user.
+        // While any socket subscribed to the user will receive messages about the
+        // user changing their name or being destroyed, ONLY this particular socket
+        // will receive "message" events.  This allows us to send private messages
+        // between users.
+        User.subscribe(socket, user, 'message');
+
+        // Get updates about users being created
+        User.watch(socket);
+
+        // Get updates about rooms being created
+        Task.watch(socket);
+
+        Category.watch(socket);
+
+        // Publish this user creation event to every socket watching the User model via User.watch()
+        User.publishCreate(user, socket);
+
+    });
     
   },
 
   // This custom onDisconnect function will be run each time a socket disconnects
   onDisconnect: function(session, socket) {
 
-    // By default: do nothing.
-  },
+      try {
+        // Look up the user ID using the connected socket
+        var userId = session.users[sails.sockets.id(socket)].id;
+
+        // Get the user instance
+        User.findOne(userId).exec(function(err, user) {
+
+          // Destroy the user instance
+          User.destroy({id:user.id}).exec(function(){});
+
+          // Publish the destroy event to every socket subscribed to this user instance
+          User.publishDestroy(user.id, null, {previous: user});
+        });
+      } catch (e) {
+        console.log("Error in onDisconnect: ", e);
+      }  },
 
 
 

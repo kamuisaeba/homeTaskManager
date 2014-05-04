@@ -7,12 +7,16 @@
 
 module.exports = {
 
+autosubscribe: ['destroy', 'update','create'],
   attributes: {
-  	name : {type :'STRING',required: true}
+  	name : {type :'STRING',required: true},
   	done : 'boolean',
   	assignedTo : { model : 'user'},
   	doneBy : { model : 'user'},
-  	finishedAt : 'date'
+  	finishedAt : 'date',
+  	category : {
+  		model : 'category'
+  	}
   }
 };
 

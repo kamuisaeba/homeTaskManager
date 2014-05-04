@@ -1,12 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>New Sails App</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 101 Template</title>
 
-    <!-- Viewport mobile tag for sensible mobile support -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Bootstrap -->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
-    
+    <style>
+    body {
+      padding-top: 50px;
+    }
+    .container.first{
+      padding: 40px 15px;
+      text-align: center;
+    }
+    </style>
     <!--  
         Stylesheets and Preprocessors
         ==============================
@@ -29,13 +45,82 @@
     -->
 
     <!--STYLES-->
+    <link rel="stylesheet" href="/styles/bootstrap.min.css">
     <link rel="stylesheet" href="/styles/importer.css">
     <!--STYLES END-->
   </head>
 
   <body>
-    <%- body %>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/" ><span class="glyphicon glyphicon-home"></span></a>
+          <a class="navbar-brand" data-toggle="modal" data-target="#modalTask" href="#modalTask" id="newTask"><span class="glyphicon glyphicon-plus-sign"></span></a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+          <!-- Cargamos este menú desde el server -->
+          <!--
+            <li class="active"><a href="#" id="navShopList">Compras<span class="badge">42</span></a></li>
+            <li><a href="#about" id="navTask">Tareas<span class="badge">42</span></a></li>
+            <li><a href="#contact" id="navVarious">Varios<span class="badge">42</span></a></li>
+            -->
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
 
+    <div class="container first" >
+        <%- body %>
+     </div><!-- /.container -->
+
+<!-- modal -->
+<div class="modal fade" id="modalTask">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Añadir a lista</h4>
+      </div>
+      <div class="modal-body">
+<form class="form-horizontal" role="form">
+  <div class="form-group">
+    <label for="taskName" class="col-sm-2 control-label">Nombre</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="taskName" placeholder="Nombre de la tarea">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="taskName" class="col-sm-2 control-label">Nombre</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="taskName" placeholder="Nombre de la tarea">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" id="taskDone"> Marcar como realizada
+        </label>
+      </div>
+    </div>
+  </div>
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Guardar</button>
+        <button type="button" class="btn btn-primary">Guardar y crear nuevo</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
     <!--
@@ -60,7 +145,7 @@
     -->
 
     <!--TEMPLATES-->
-    
+    <script type="text/javascript" src="/jst.js"></script>
     <!--TEMPLATES END-->
 
 
@@ -86,9 +171,15 @@
           + Use a different preprocessor, like TypeScript
 
     -->
+    <script src="/js/jQuery.js"></script>
 
     <!--SCRIPTS-->
     <script src="/js/dependencies/sails.io.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jQuery.js"></script>
+    <script src="/js/menu.js"></script>
+    <script src="/js/task.js"></script>
     <!--SCRIPTS END-->
   </body>
 </html>

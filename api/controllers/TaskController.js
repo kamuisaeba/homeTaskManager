@@ -8,19 +8,18 @@
 module.exports = {
 	todoTaskCount : function (req,res){
 		Task.count({
-			user : req.session.user, 
-			done : false}).exec()
-	},
-	doneTaskCount : function (req,res){
-		Task.count({
-			user : req.session.user, 
-			done : false}).exec()
+			user : 1, 
+			done : false}).exec(function(err,found){
+				if (err) found = 0;
+				res.json({todoTaskCounter:found});
+
+			})
 	},
 	todoTask : function (req,res){
 		Task.find({
 			user : req.session.user, 
-			done : false})
-		}).exect(function(err,task){
+			done : false}).exec(function(err,task){
+			res.json(task);
 
 		})
 	},
@@ -30,16 +29,18 @@ module.exports = {
 			done : (req.param('done') != undefined) ? req.param('done'): false,
 			name : req.param('name')}).exec(function(err,task){
 				if (err) return next(err);
-				next(task)
+				res.json(task);
 			})
-
-		})
 	},
 	markAsDone : function (req,res){
-		Task.find({user : req.session.user}).update({finishedBy: req.session.user, done: true, finishedAt: new Date() }).exec(function(err,task){
+		Task
+		.find({user : req.session.user})
+		.update({finishedBy: 1, done: true, finishedAt: new Date() })
+		.exec(function(err,task){
 			console.info(task);
 		})
 	},
 	destroyTask : function (req, res){
-
+		console.info("destroy")
 	}
+};

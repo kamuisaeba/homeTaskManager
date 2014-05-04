@@ -8,7 +8,11 @@
 module.exports = {
 
   attributes: {
-  	name : 'String'
+  	name : 'String',
+  	categories : { 
+  		collection : 'category',
+  		via : 'users'
+  	}
   }
 };
 
